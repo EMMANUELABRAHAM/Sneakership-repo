@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.company.sneakership.databinding.ListItemSneakerBinding
 import com.company.sneakership.model.Sneaker
 
-class SneakerAdapter(private val onItemClick: (Int) -> Unit) :
+class SneakerAdapter(private val onItemClick: (String) -> Unit) :
     ListAdapter<Sneaker, SneakerAdapter.SneakerViewHolder>(DiffCallback) {
 
     // ViewHolder class
@@ -45,7 +45,7 @@ class SneakerAdapter(private val onItemClick: (Int) -> Unit) :
 
         // Set click listener
         holder.itemView.setOnClickListener {
-            onItemClick.invoke(sneaker.id)
+            sneaker.id?.let { it1 -> onItemClick.invoke(it1) }
         }
     }
 }

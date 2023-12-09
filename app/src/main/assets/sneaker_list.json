@@ -1,0 +1,56 @@
+[
+  {
+    "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+    "brand": "Nike",
+    "colorway": "Red/Black",
+    "gender": "Men",
+    "media": {
+      "imageUrl": "https://example.com/nike-shoe.jpg",
+      "smallImageUrl": "https://example.com/nike-shoe-small.jpg",
+      "thumbUrl": "https://example.com/nike-shoe-thumb.jpg"
+    },
+    "releaseDate": "2022-12-15",
+    "retailPrice": 150,
+    "styleId": "ABC123",
+    "shoe": "Air Max",
+    "name": "Air Max 2022",
+    "title": "Comfort and Style",
+    "year": 2022
+  },
+  {
+    "id": "8b957344-7281-4bf4-88cd-aa48c6a09a3c",
+    "brand": "Adidas",
+    "colorway": "Blue/White",
+    "gender": "Women",
+    "media": {
+      "imageUrl": "https://example.com/adidas-shoe.jpg",
+      "smallImageUrl": "https://example.com/adidas-shoe-small.jpg",
+      "thumbUrl": "https://example.com/adidas-shoe-thumb.jpg"
+    },
+    "releaseDate": "2022-11-28",
+    "retailPrice": 120,
+    "styleId": "DEF456",
+    "shoe": "Ultra Boost",
+    "name": "Ultra Boost X",
+    "title": "Elevate Your Run",
+    "year": 2022
+  },
+  {
+    "id": "3fa85f64-5717-4562-b3fc-2c963f66afa7",
+    "brand": "Nike",
+    "colorway": "Red/Black",
+    "gender": "Men",
+    "media": {
+      "imageUrl": "https://example.com/nike-shoe.jpg",
+      "smallImageUrl": "https://example.com/nike-shoe-small.jpg",
+      "thumbUrl": "https://example.com/nike-shoe-thumb.jpg"
+    },
+    "releaseDate": "2022-12-15",
+    "retailPrice": 155,
+    "styleId": "ABC123",
+    "shoe": "Air Max",
+    "name": "Air Max 2022",
+    "title": "Comfort and Style",
+    "year": 2022
+  }
+]

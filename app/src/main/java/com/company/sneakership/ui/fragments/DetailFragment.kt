@@ -27,14 +27,14 @@ class DetailFragment : Fragment() {
         binding = FragmentDetailBinding.inflate(inflater, container, false)
         val view = binding.root
 
-        viewModel = ViewModelProvider(this).get(DetailViewModel::class.java)
-        sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
+        viewModel = ViewModelProvider(this)[DetailViewModel::class.java]
+        sharedViewModel = ViewModelProvider(requireActivity())[SharedViewModel::class.java]
 
         // Retrieve itemId from SharedViewModel
         val itemId = sharedViewModel.selectedItemId.value ?: 0
 
         // Use itemId to load details from ViewModel
-        viewModel.loadDetails(itemId)
+//        viewModel.loadDetails(itemId)
 
         // Set up navigation controller
         navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
