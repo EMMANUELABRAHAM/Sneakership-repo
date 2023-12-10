@@ -136,7 +136,7 @@ class SharedViewModel(private val application: Application) : ViewModel() {
     fun searchSneakers(searchWord: String) {
         //Home ViewModel
         _sneakersListLiveData.value = masterSneakerList.filter {
-            it.name?.contains(searchWord) ?: false
+            it.name?.contains(searchWord, true) ?: false
         }
     }
 
