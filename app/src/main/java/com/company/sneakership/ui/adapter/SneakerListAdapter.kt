@@ -49,7 +49,7 @@ class SneakerAdapter :
             }
             binding.plusIcon.setOnClickListener {
                 sneaker.addedToCart.let { addedToCart ->
-                    if (addedToCart) {
+                    if (!addedToCart) {
                         binding.plusIcon.setImageResource(R.drawable.baseline_cancel_24)
                     } else {
                         binding.plusIcon.setImageResource(R.drawable.round_add_circle_24)

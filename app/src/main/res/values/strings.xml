@@ -24,4 +24,6 @@
     <string name="high_to_low">High to Low</string>
     <string name="low_to_high">Low to High</string>
     <string name="apply">Apply</string>
+    <string name="add_to_cart_text">Add to Cart</string>
+    <string name="remove_from_cart">Remove from Cart</string>
 </resources>
