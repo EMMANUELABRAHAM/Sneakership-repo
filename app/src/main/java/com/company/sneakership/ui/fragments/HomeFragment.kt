@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -18,7 +17,6 @@ import com.company.sneakership.databinding.FragmentHomeBinding
 import com.company.sneakership.ui.adapter.SneakerAdapter
 import com.company.sneakership.ui.viewmodels.HomeViewModel
 import com.company.sneakership.ui.viewmodels.SharedViewModel
-
 
 class HomeFragment : Fragment() {
 
@@ -41,13 +39,12 @@ class HomeFragment : Fragment() {
 //            .placeholder(R.drawable.ic_home)
 //            .into(binding.imageView);
 
-//        viewModel = ViewModelProvider(this)[HomeViewModel::class.java]
-        sharedViewModel = ViewModelProvider(requireActivity())[SharedViewModel::class.java]
-
-        viewModel = ViewModelProvider(
+        sharedViewModel = ViewModelProvider(
             this,
-            HomeViewModel.ViewModelFactory(requireActivity().application)
-        )[HomeViewModel::class.java]
+            SharedViewModel.ViewModelFactory(requireActivity().application)
+        )[SharedViewModel::class.java]
+
+        viewModel = ViewModelProvider(requireActivity())[HomeViewModel::class.java]
 
         binding.recyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
         val adapter = SneakerAdapter { itemId ->
@@ -56,16 +53,18 @@ class HomeFragment : Fragment() {
         }
         binding.recyclerView.adapter = adapter
 
-        viewModel.sneakersLiveData.observe(viewLifecycleOwner, Observer {
+        sharedViewModel.sneakersListLiveData.observe(viewLifecycleOwner) {
             Log.d("Response", it.toString())
-        })
+        }
+
+        sharedViewModel.errorMsg.observe(viewLifecycleOwner){
+            it?.let {
+                Toast.makeText(requireActivity(), it, Toast.LENGTH_SHORT).show()
+            }
+        }
 
         // Set up navigation controller
         navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
-
-
-//        (requireActivity() as AppCompatActivity).setSupportActionBar(binding.toolbar)
-//        (requireActivity() as AppCompatActivity).supportActionBar!!.setDisplayShowTitleEnabled(false)
 
         binding.searchView.setOnClickListener {
             Toast.makeText(requireActivity(), "Search", Toast.LENGTH_SHORT).show()
