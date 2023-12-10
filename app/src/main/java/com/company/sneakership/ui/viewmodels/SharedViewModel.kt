@@ -18,16 +18,21 @@ class SharedViewModel(private val application: Application) : ViewModel() {
     private val _selectedItemId = MutableLiveData<String>()
     val selectedItemId: LiveData<String>
         get() = _selectedItemId
+
     private val sneakerRepository = SneakerRepository()
+
     private val _sneakersListLiveData = MutableLiveData<List<Sneaker>?>()
-    val sneakersListLiveData: MutableLiveData<List<Sneaker>?> = _sneakersListLiveData
+    val sneakersListLiveData: LiveData<List<Sneaker>?>
+        get() = _sneakersListLiveData
 
     private val _sneakersCartListLiveData = MutableLiveData<List<Sneaker>?>()
-    val sneakersCartListLiveData: MutableLiveData<List<Sneaker>?> = _sneakersCartListLiveData
+    val sneakersCartListLiveData: LiveData<List<Sneaker>?>
+        get() = _sneakersCartListLiveData
 
     private val _errorMsg: MutableLiveData<String?> = MutableLiveData<String?>()
     val errorMsg: LiveData<String?>
         get() = _errorMsg
+
     private val _itemDetails = MutableLiveData<Sneaker?>()
     val itemDetails: LiveData<Sneaker?>
         get() = _itemDetails
@@ -48,6 +53,7 @@ class SharedViewModel(private val application: Application) : ViewModel() {
                         // Update UI with successful response data
                         _sneakersListLiveData.value = response.data
                     }
+
                     is ApiResponse.Error -> {
                         _errorMsg.value = response.errorMessage
                     }
@@ -68,17 +74,16 @@ class SharedViewModel(private val application: Application) : ViewModel() {
     }
 
 
-
-    fun updateCartItem(id: String){
-       sneakersListLiveData.value?.first { it.id == id }?.let {sneaker ->
-           sneaker.addedToCart.let { addedToCart ->
-               sneaker.addedToCart = !addedToCart
-           }
-       }
+    fun updateCartItem(id: String) {
+        sneakersListLiveData.value?.first { it.id == id }?.let { sneaker ->
+            sneaker.addedToCart.let { addedToCart ->
+                sneaker.addedToCart = !addedToCart
+            }
+        }
         updateCartList()
     }
 
-    fun updateCartList(){
+    fun updateCartList() {
         _sneakersCartListLiveData.value = sneakersListLiveData.value?.filter {
             it.addedToCart
         }
@@ -86,17 +91,18 @@ class SharedViewModel(private val application: Application) : ViewModel() {
     }
 
     private fun updateOrderDetails() {
-        val subTotal:Int = getSubtotalPrice()
-        val taxAndCharges = abs( subTotal * TAX)
+        val subTotal: Int = getSubtotalPrice()
+        val taxAndCharges = abs(subTotal * TAX)
         val total = subTotal + taxAndCharges
 
-        _orderDetails.value = OrderDetails(subTotal.toString(),taxAndCharges.toString(),total.toString())
+        _orderDetails.value =
+            OrderDetails(subTotal.toString(), taxAndCharges.toString(), total.toString())
     }
 
     private fun getSubtotalPrice(): Int {
         var subTotal = 0
         _sneakersCartListLiveData.value?.forEach { sneaker ->
-            sneaker.retailPrice?.let{
+            sneaker.retailPrice?.let {
                 subTotal += it
             }
         }
@@ -129,6 +135,6 @@ class SharedViewModel(private val application: Application) : ViewModel() {
     }
 
     companion object {
-        const val TAX:Double = 0.18
+        const val TAX: Double = 0.18
     }
 }
