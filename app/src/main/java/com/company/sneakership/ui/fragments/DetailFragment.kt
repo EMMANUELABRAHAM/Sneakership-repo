@@ -36,16 +36,13 @@ class DetailFragment : Fragment() {
             SharedViewModel.ViewModelFactory(requireActivity().application)
         )[SharedViewModel::class.java]
 
-        // Retrieve itemId from SharedViewModel
         val sneakerId: String = sharedViewModel.selectedItemId.value ?: "0"
 
-        // Use itemId to load details from ViewModel
         sharedViewModel.getItemDetails(sneakerId)
 
         sharedViewModel.itemDetails.observe(viewLifecycleOwner) {
             it?.let {
                 updateViews(it)
-                Toast.makeText(requireActivity(), "UpdateView", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -65,7 +62,7 @@ class DetailFragment : Fragment() {
         // Set up back button click listener
         binding.backButton.setOnClickListener {
             Toast.makeText(requireActivity(), "Back Button Pressed", Toast.LENGTH_SHORT).show()
-            navController.navigateUp()
+            navController.popBackStack()
         }
 
         return view

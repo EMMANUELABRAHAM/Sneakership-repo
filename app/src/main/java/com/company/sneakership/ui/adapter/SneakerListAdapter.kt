@@ -36,10 +36,7 @@ class SneakerAdapter :
         fun bind(sneaker: Sneaker) {
             binding.sneakerName.text = sneaker.name
             binding.sneakerPrice.text = "$${sneaker.retailPrice.toString()}"
-            Glide.with(itemView.context)
-                .load(sneaker.media?.imageUrl)
-                .circleCrop()
-                .centerCrop()
+            Glide.with(itemView.context).load(sneaker.media?.imageUrl).circleCrop().centerCrop()
                 .into(binding.sneakerImage)
             binding.sneakerImage.setOnClickListener {
                 sneaker.id?.let { it1 -> itemClickListener?.itemClick(it1) }
@@ -52,12 +49,12 @@ class SneakerAdapter :
             }
             binding.plusIcon.setOnClickListener {
                 sneaker.addedToCart.let { addedToCart ->
-                    if (addedToCart){
+                    if (addedToCart) {
                         binding.plusIcon.setImageResource(R.drawable.baseline_cancel_24)
-                    }else{
+                    } else {
                         binding.plusIcon.setImageResource(R.drawable.round_add_circle_24)
                     }
-                    sneaker.id?.let {id ->
+                    sneaker.id?.let { id ->
                         itemClickListener?.cartIconClick(id)
                     }
                 }

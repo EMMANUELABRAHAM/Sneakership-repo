@@ -21,4 +21,7 @@
     <string name="taxes_and_charges">Taxes and Charges :</string>
     <string name="total">Total :</string>
     <string name="check_out">$ Check Out</string>
+    <string name="high_to_low">High to Low</string>
+    <string name="low_to_high">Low to High</string>
+    <string name="apply">Apply</string>
 </resources>

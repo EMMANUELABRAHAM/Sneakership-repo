@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.company.sneakership.model.OrderDetails
 import com.company.sneakership.model.Sneaker
+import com.company.sneakership.model.SortCriteria
 import com.company.sneakership.model.repository.SneakerRepository
 import com.company.sneakership.utils.ApiResponse
 import kotlinx.coroutines.launch
@@ -104,11 +105,19 @@ class SharedViewModel(private val application: Application) : ViewModel() {
 
     fun searchSneakers(searchWord: String) {
         //Home ViewModel
-        sneakersListLiveData.value = sneakersListLiveData.value?.filter {
+        _sneakersListLiveData.value = sneakersListLiveData.value?.filter {
             it.name?.contains(searchWord) ?: false
         }
     }
 
+    fun sortSneakersBy(criteria: SortCriteria) {
+        //Home View Model
+        val sortedList = when (criteria) {
+            SortCriteria.RETAIL_PRICE_LOW_TO_HIGH -> sneakersListLiveData.value?.sortedBy { it.retailPrice }
+            SortCriteria.RETAIL_PRICE_HIGH_TO_LOW -> sneakersListLiveData.value?.sortedByDescending { it.retailPrice }
+        }
+        _sneakersListLiveData.value = sortedList
+    }
 
     class ViewModelFactory(private val application: Application) : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {

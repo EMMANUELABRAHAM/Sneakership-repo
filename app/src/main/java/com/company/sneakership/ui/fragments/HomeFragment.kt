@@ -13,12 +13,13 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
 import com.company.sneakership.R
 import com.company.sneakership.databinding.FragmentHomeBinding
+import com.company.sneakership.model.SortCriteria
 import com.company.sneakership.ui.adapter.SneakerAdapter
 import com.company.sneakership.ui.adapter.listners.HomeSneakerListListener
 import com.company.sneakership.ui.viewmodels.HomeViewModel
 import com.company.sneakership.ui.viewmodels.SharedViewModel
 
-class HomeFragment : Fragment(), HomeSneakerListListener {
+class HomeFragment : Fragment(), HomeSneakerListListener, SortBottomSheetFragment.SortListener {
 
     private lateinit var viewModel: HomeViewModel
     private lateinit var sharedViewModel: SharedViewModel
@@ -58,6 +59,13 @@ class HomeFragment : Fragment(), HomeSneakerListListener {
 
         navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
         configureSearchView()
+
+        val sortBottomSheetFragment = SortBottomSheetFragment()
+        sortBottomSheetFragment.setSortListener(this)
+        binding.textSortBy.setOnClickListener {
+            sortBottomSheetFragment.show(childFragmentManager, sortBottomSheetFragment.tag)
+
+        }
         return view
     }
 
@@ -66,13 +74,13 @@ class HomeFragment : Fragment(), HomeSneakerListListener {
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 // Handle the query when the user submits
-                binding.searchView.clearFocus()
-                sharedViewModel.searchSneakers(query.orEmpty())
+//                binding.searchView.clearFocus()
+//                sharedViewModel.searchSneakers(query.orEmpty())
                 return false
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-//                sharedViewModel.searchSneakers(newText.orEmpty())
+                sharedViewModel.searchSneakers(newText.orEmpty())
                 return false
             }
         })
@@ -95,5 +103,14 @@ class HomeFragment : Fragment(), HomeSneakerListListener {
 
     override fun cartIconClick(id: String) {
       sharedViewModel.updateCartItem(id)
+    }
+
+    override fun onSortSelected(sortCriteria: SortCriteria) {
+        sharedViewModel.sortSneakersBy(sortCriteria)
+        val text = when(sortCriteria){
+            SortCriteria.RETAIL_PRICE_HIGH_TO_LOW -> "HighToLow"
+            SortCriteria.RETAIL_PRICE_LOW_TO_HIGH -> "LowToHigh"
+        }
+        binding.textSortBy.text =text
     }
 }

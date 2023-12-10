@@ -18,6 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:layout_marginTop="7dp"
+            android:elevation="2dp"
             android:contentDescription="@string/plus_icon"
             android:src="@drawable/round_add_circle_24"
             app:layout_constraintStart_toStartOf="parent"
@@ -32,7 +33,7 @@
             android:src="@drawable/sneaker"
             app:layout_constraintBottom_toTopOf="@id/sneakerName"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/plusIcon"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="parent"
             tools:src="@drawable/sneaker" />
 

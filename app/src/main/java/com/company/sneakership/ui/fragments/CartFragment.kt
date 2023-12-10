@@ -31,9 +31,9 @@ class CartFragment : Fragment(), CartItemListener {
         binding = FragmentCartBinding.inflate(inflater, container, false)
         val view = binding.root
         navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
-//        binding.backButton.setOnClickListener {
-//            navController.navigateUp()
-//        }
+        binding.backButton.setOnClickListener {
+            navController.popBackStack()
+        }
         sharedViewModel = ViewModelProvider(
             requireActivity(),
             SharedViewModel.ViewModelFactory(requireActivity().application)
