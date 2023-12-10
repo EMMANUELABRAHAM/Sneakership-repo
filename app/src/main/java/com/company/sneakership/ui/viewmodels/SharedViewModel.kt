@@ -5,11 +5,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 class SharedViewModel : ViewModel() {
-    private val _selectedItemId = MutableLiveData<Int>()
-    val selectedItemId: LiveData<Int>
+    private val _selectedItemId = MutableLiveData<String>()
+    val selectedItemId: LiveData<String>
         get() = _selectedItemId
 
-    fun setSelectedItemId(itemId: Int) {
+    fun setSelectedItemId(itemId: String) {
         _selectedItemId.value = itemId
     }
 }

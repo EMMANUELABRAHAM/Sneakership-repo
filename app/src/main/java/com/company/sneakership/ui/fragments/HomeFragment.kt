@@ -1,6 +1,7 @@
 package com.company.sneakership.ui.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.company.sneakership.R
 import com.company.sneakership.databinding.FragmentHomeBinding
 import com.company.sneakership.ui.adapter.SneakerAdapter
@@ -30,8 +32,19 @@ class HomeFragment : Fragment() {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
         val view = binding.root
 
-        viewModel = ViewModelProvider(this)[HomeViewModel::class.java]
+        Glide
+            .with(this)
+            .load("file:///android_asset/images/sneaker.png")
+            .centerCrop()
+            .placeholder(R.drawable.ic_home)
+            .into(binding.imageView);
+
+//        viewModel = ViewModelProvider(this)[HomeViewModel::class.java]
         sharedViewModel = ViewModelProvider(requireActivity())[SharedViewModel::class.java]
+
+        viewModel = ViewModelProvider(this,
+            HomeViewModel.ViewModelFactory(requireActivity().application)
+        )[HomeViewModel::class.java]
 
         // Setup RecyclerView and adapter for listing T-shirts
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
@@ -42,8 +55,8 @@ class HomeFragment : Fragment() {
         binding.recyclerView.adapter = adapter
 
         // Observe the list of T-shirts from the ViewModel
-        viewModel.sneakerListLiveData.observe(viewLifecycleOwner, Observer {
-            adapter.submitList(it)
+        viewModel.sneakersLiveData.observe(viewLifecycleOwner, Observer {
+            Log.d("Response", it.toString())
         })
 
         // Set up navigation controller

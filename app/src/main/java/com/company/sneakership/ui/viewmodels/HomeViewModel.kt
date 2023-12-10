@@ -1,31 +1,57 @@
 package com.company.sneakership.ui.viewmodels
 
+import android.app.Application
 import androidx.lifecycle.ViewModel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import com.company.sneakership.model.Sneaker
+import com.company.sneakership.model.repository.SneakerRepository
+import com.company.sneakership.utils.ApiResponse
+import kotlinx.coroutines.launch
 
-class HomeViewModel : ViewModel() {
+class HomeViewModel(private val application: Application) : ViewModel() {
 
-    private val _sneakersListLiveData = MutableLiveData<List<Sneaker>>()
-    val sneakerListLiveData: LiveData<List<Sneaker>>
-        get() = _sneakersListLiveData
+    private val sneakerRepository = SneakerRepository()
+    private val _sneakersLiveData = MutableLiveData<ApiResponse<List<Sneaker>>>()
+    val sneakersLiveData: LiveData<ApiResponse<List<Sneaker>>> = _sneakersLiveData
 
-    // Initialize the ViewModel with some dummy data
     init {
-        loadSneakers()
+        getSneakers()
     }
 
-    private fun loadSneakers() {
-        // In a real application, you would fetch data from a repository or API
-        val dummyData = listOf(
-            Sneaker(id = 1, name = "T-shirt 1", price = 19.99),
-            Sneaker(id = 2, name = "T-shirt 2", price = 24.99),
-            Sneaker(id = 3, name = "T-shirt 3", price = 29.99),
-            // Add more T-shirts as needed
-        )
+    private fun getSneakers() {
+        viewModelScope.launch {
+            try {
+                when (val response = sneakerRepository.getSneakers(application.assets)) {
+                    is ApiResponse.Success -> {
+                        // Update UI with successful response data
+                        _sneakersLiveData.value = ApiResponse.Success(response.data)
+                    }
 
-        _sneakersListLiveData.value = dummyData
+                    is ApiResponse.Error -> {
+                        // Handle the error case
+                        val errorMessage = response.errorMessage
+                        val statusCode = response.statusCode
+                        _sneakersLiveData.value = ApiResponse.Error(errorMessage, statusCode)
+                    }
+                }
+            } catch (e: Exception) {
+                // Handle unexpected exceptions
+                val errorMessage = "Unexpected error: ${e.message}"
+                _sneakersLiveData.value = ApiResponse.Error(errorMessage, 500)
+            }
+        }
+    }
+
+    class ViewModelFactory(private val application: Application) : ViewModelProvider.Factory {
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
+            if (modelClass.isAssignableFrom(HomeViewModel::class.java)) {
+                return HomeViewModel(application) as T
+            }
+            throw IllegalArgumentException("Unknown ViewModel class")
+        }
     }
 }
