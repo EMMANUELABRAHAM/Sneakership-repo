@@ -21,7 +21,7 @@ class SharedViewModel(private val application: Application) : ViewModel() {
 
     private val sneakerRepository = SneakerRepository()
 
-    private val _sneakersListLiveData = MutableLiveData<List<Sneaker>?>()
+    private val _sneakersListLiveData = MutableLiveData<List<Sneaker>?>() // This list will be filtered in different conditions eg: search and filter.
     val sneakersListLiveData: LiveData<List<Sneaker>?>
         get() = _sneakersListLiveData
 
@@ -41,6 +41,8 @@ class SharedViewModel(private val application: Application) : ViewModel() {
     val orderDetails: LiveData<OrderDetails>
         get() = _orderDetails
 
+    private var masterSneakerList = emptyList<Sneaker>()
+
     init {
         getSneakers()
     }
@@ -52,6 +54,7 @@ class SharedViewModel(private val application: Application) : ViewModel() {
                     is ApiResponse.Success -> {
                         // Update UI with successful response data
                         _sneakersListLiveData.value = response.data
+                        masterSneakerList = response.data
                     }
 
                     is ApiResponse.Error -> {
@@ -74,13 +77,34 @@ class SharedViewModel(private val application: Application) : ViewModel() {
     }
 
 
+    //Responsible for adding or removing item from the cart.
     fun updateCartItem(id: String) {
         sneakersListLiveData.value?.first { it.id == id }?.let { sneaker ->
             sneaker.addedToCart.let { addedToCart ->
                 sneaker.addedToCart = !addedToCart
             }
         }
+        updateMasterList()
         updateCartList()
+    }
+
+    private fun updateMasterList(){
+        sneakersListLiveData.value?.forEach {filteredSneaker ->
+            masterSneakerList.first { it.id == filteredSneaker.id }.let { masterListSneaker ->
+                masterListSneaker.addedToCart = filteredSneaker.addedToCart
+                masterListSneaker.name = filteredSneaker.name
+                masterListSneaker.brand = filteredSneaker.brand
+                masterListSneaker.media = filteredSneaker.media
+                masterListSneaker.releaseDate = filteredSneaker.releaseDate
+                masterListSneaker.retailPrice = filteredSneaker.retailPrice
+                masterListSneaker.colorway = filteredSneaker.colorway
+                masterListSneaker.gender = filteredSneaker.gender
+                masterListSneaker.styleId = filteredSneaker.styleId
+                masterListSneaker.shoe = filteredSneaker.shoe
+                masterListSneaker.title = filteredSneaker.title
+                masterListSneaker.year = filteredSneaker.year
+            }
+        }
     }
 
     fun updateCartList() {
