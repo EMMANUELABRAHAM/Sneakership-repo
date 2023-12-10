@@ -45,27 +45,34 @@ class DetailFragment : Fragment() {
                 updateViews(it)
             }
         }
-
         val initializedList: MutableList<String> = mutableListOf("file:///android_asset/images/sneaker-img.png", "file:///android_asset/images/sneaker-img.png", "file:///android_asset/images/sneaker-img.png")
-
 
         val adapter = SneakerImagePagerAdapter(initializedList)
         binding.viewPager.adapter = adapter
         binding.cartBtn.setOnClickListener{
+            showToastForTheCartOperation()
             sharedViewModel.updateCartItem(sneakerId)
-            Toast.makeText(requireActivity(), "Item carted", Toast.LENGTH_SHORT).show()
-            //TODO change the Button Text.
+            sharedViewModel.getItemDetails(sneakerId)
         }
         // Set up navigation controller
         navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
 
         // Set up back button click listener
         binding.backButton.setOnClickListener {
-            Toast.makeText(requireActivity(), "Back Button Pressed", Toast.LENGTH_SHORT).show()
             navController.popBackStack()
         }
 
         return view
+    }
+
+    private fun showToastForTheCartOperation() {
+        sharedViewModel.itemDetails.value?.let {
+            if (it.addedToCart){
+                Toast.makeText(requireActivity(), "Item Removed", Toast.LENGTH_SHORT).show()
+            }else{
+                Toast.makeText(requireActivity(), "Item Added", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     private fun updateViews(it: Sneaker) {
@@ -73,9 +80,9 @@ class DetailFragment : Fragment() {
         binding.sneakerName.text = it.name
         binding.sneakerDesc.text = getString(R.string.sample_description_of_the_item)
         if (it.addedToCart){
-            binding.cartBtn.text = getString(R.string.add_to_cart_text)
-        }else{
             binding.cartBtn.text = getString(R.string.remove_from_cart)
+        }else{
+            binding.cartBtn.text = getString(R.string.add_to_cart_text)
         }
     }
 }
