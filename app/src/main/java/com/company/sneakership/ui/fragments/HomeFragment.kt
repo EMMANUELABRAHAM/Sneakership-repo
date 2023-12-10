@@ -32,13 +32,6 @@ class HomeFragment : Fragment() {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
         val view = binding.root
 
-//        Glide
-//            .with(this)
-//            .load("file:///android_asset/images/sneaker.png")
-//            .centerCrop()
-//            .placeholder(R.drawable.ic_home)
-//            .into(binding.imageView);
-
         sharedViewModel = ViewModelProvider(
             this,
             SharedViewModel.ViewModelFactory(requireActivity().application)
@@ -54,16 +47,17 @@ class HomeFragment : Fragment() {
         binding.recyclerView.adapter = adapter
 
         sharedViewModel.sneakersListLiveData.observe(viewLifecycleOwner) {
-            Log.d("Response", it.toString())
+            it?.let {
+                adapter.submitList(it)
+            }
         }
 
-        sharedViewModel.errorMsg.observe(viewLifecycleOwner){
+        sharedViewModel.errorMsg.observe(viewLifecycleOwner) {
             it?.let {
                 Toast.makeText(requireActivity(), it, Toast.LENGTH_SHORT).show()
             }
         }
 
-        // Set up navigation controller
         navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
 
         binding.searchView.setOnClickListener {
