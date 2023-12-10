@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.company.sneakership.R
 import com.company.sneakership.databinding.ListItemSneakerBinding
 import com.company.sneakership.model.Sneaker
 
@@ -27,14 +28,23 @@ class SneakerAdapter(private val onItemClick: (String) -> Unit) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(sneaker: Sneaker) {
             binding.sneakerName.text = sneaker.name
-            binding.sneakerPrice.text = sneaker.retailPrice.toString()
+            binding.sneakerPrice.text = "$${sneaker.retailPrice.toString()}"
             Glide.with(itemView.context)
-                .load(sneaker.media?.thumbUrl)
+                .load(sneaker.media?.imageUrl)
                 .circleCrop()
-                .centerInside()
+                .centerCrop()
                 .into(binding.sneakerImage)
-            binding.root.setOnClickListener {
+            binding.sneakerImage.setOnClickListener {
                 sneaker.id?.let { it1 -> onItemClick(it1) }
+            }
+            binding.sneakerName.setOnClickListener {
+                sneaker.id?.let { it1 -> onItemClick(it1) }
+            }
+            binding.sneakerPrice.setOnClickListener {
+                sneaker.id?.let { it1 -> onItemClick(it1) }
+            }
+            binding.plusIcon.setOnClickListener {
+                binding.plusIcon.setImageResource(R.drawable.baseline_cancel_24)
             }
         }
     }
