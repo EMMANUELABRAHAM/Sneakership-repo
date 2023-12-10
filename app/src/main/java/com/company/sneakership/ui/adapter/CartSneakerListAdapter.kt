@@ -6,13 +6,18 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.company.sneakership.R
 import com.company.sneakership.databinding.ListItemCartSneakerBinding
-import com.company.sneakership.databinding.ListItemSneakerBinding
 import com.company.sneakership.model.Sneaker
+import com.company.sneakership.ui.adapter.listners.CartItemListener
 
-class CartSneakerListAdapter(private val onItemClick: (String) -> Unit) :
+class CartSneakerListAdapter :
     ListAdapter<Sneaker, CartSneakerListAdapter.SneakerViewHolder>(CartSneakerDiffCallback()) {
+
+    private var itemClickListener: CartItemListener? = null
+
+    fun setOnItemClickListener(listener: CartItemListener) {
+        this.itemClickListener = listener
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SneakerViewHolder {
         val binding: ListItemCartSneakerBinding =
@@ -30,22 +35,12 @@ class CartSneakerListAdapter(private val onItemClick: (String) -> Unit) :
         fun bind(sneaker: Sneaker) {
             binding.sneakerName.text = sneaker.name
             binding.sneakerPrice.text = "$${sneaker.retailPrice.toString()}"
-            Glide.with(itemView.context)
-                .load(sneaker.media?.imageUrl)
-                .circleCrop()
-                .centerCrop()
+            Glide.with(itemView.context).load(sneaker.media?.imageUrl).circleCrop().centerCrop()
                 .into(binding.sneakerImage)
-            binding.sneakerImage.setOnClickListener {
-                sneaker.id?.let { it1 -> onItemClick(it1) }
-            }
-            binding.sneakerName.setOnClickListener {
-                sneaker.id?.let { it1 -> onItemClick(it1) }
-            }
-            binding.sneakerPrice.setOnClickListener {
-                sneaker.id?.let { it1 -> onItemClick(it1) }
-            }
             binding.cancelIcon.setOnClickListener {
-                binding.cancelIcon.setImageResource(R.drawable.baseline_cancel_24)
+                sneaker.id?.let {
+                    itemClickListener?.removeItemClick(it)
+                }
             }
         }
     }

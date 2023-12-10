@@ -1,7 +1,6 @@
 package com.company.sneakership.ui.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -58,10 +57,6 @@ class HomeFragment : Fragment(), HomeSneakerListListener {
         }
 
         navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
-
-        binding.searchView.setOnClickListener {
-            Toast.makeText(requireActivity(), "Search", Toast.LENGTH_SHORT).show()
-        }
         configureSearchView()
         return view
     }
@@ -72,12 +67,12 @@ class HomeFragment : Fragment(), HomeSneakerListListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 // Handle the query when the user submits
                 binding.searchView.clearFocus()
-//                binding.searchView.isIconified = true
+                sharedViewModel.searchSneakers(query.orEmpty())
                 return false
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                // Handle the query text as it changes
+//                sharedViewModel.searchSneakers(newText.orEmpty())
                 return false
             }
         })
@@ -99,6 +94,6 @@ class HomeFragment : Fragment(), HomeSneakerListListener {
     }
 
     override fun cartIconClick(id: String) {
-      sharedViewModel.updateCartList(id)
+      sharedViewModel.updateCartItem(id)
     }
 }

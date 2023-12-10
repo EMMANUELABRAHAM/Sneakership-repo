@@ -6,10 +6,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.company.sneakership.model.OrderDetails
 import com.company.sneakership.model.Sneaker
 import com.company.sneakership.model.repository.SneakerRepository
 import com.company.sneakership.utils.ApiResponse
 import kotlinx.coroutines.launch
+import kotlin.math.abs
 
 class SharedViewModel(private val application: Application) : ViewModel() {
     private val _selectedItemId = MutableLiveData<String>()
@@ -28,6 +30,10 @@ class SharedViewModel(private val application: Application) : ViewModel() {
     private val _itemDetails = MutableLiveData<Sneaker?>()
     val itemDetails: LiveData<Sneaker?>
         get() = _itemDetails
+
+    private val _orderDetails: MutableLiveData<OrderDetails> = MutableLiveData<OrderDetails>()
+    val orderDetails: LiveData<OrderDetails>
+        get() = _orderDetails
 
     init {
         getSneakers()
@@ -60,7 +66,9 @@ class SharedViewModel(private val application: Application) : ViewModel() {
         _itemDetails.value = sneakersListLiveData.value?.first { it.id == itemId }
     }
 
-    fun updateCartList(id: String){
+
+
+    fun updateCartItem(id: String){
        sneakersListLiveData.value?.first { it.id == id }?.let {sneaker ->
            sneaker.addedToCart.let { addedToCart ->
                sneaker.addedToCart = !addedToCart
@@ -73,6 +81,32 @@ class SharedViewModel(private val application: Application) : ViewModel() {
         _sneakersCartListLiveData.value = sneakersListLiveData.value?.filter {
             it.addedToCart
         }
+        updateOrderDetails()
+    }
+
+    private fun updateOrderDetails() {
+        val subTotal:Int = getSubtotalPrice()
+        val taxAndCharges = abs( subTotal * TAX)
+        val total = subTotal + taxAndCharges
+
+        _orderDetails.value = OrderDetails(subTotal.toString(),taxAndCharges.toString(),total.toString())
+    }
+
+    private fun getSubtotalPrice(): Int {
+        var subTotal = 0
+        _sneakersCartListLiveData.value?.forEach { sneaker ->
+            sneaker.retailPrice?.let{
+                subTotal += it
+            }
+        }
+        return subTotal
+    }
+
+    fun searchSneakers(searchWord: String) {
+        //Home ViewModel
+        sneakersListLiveData.value = sneakersListLiveData.value?.filter {
+            it.name?.contains(searchWord) ?: false
+        }
     }
 
 
@@ -83,5 +117,9 @@ class SharedViewModel(private val application: Application) : ViewModel() {
             }
             throw IllegalArgumentException("Unknown ViewModel class")
         }
+    }
+
+    companion object {
+        const val TAX:Double = 0.18
     }
 }

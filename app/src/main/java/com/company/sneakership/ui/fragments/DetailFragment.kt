@@ -55,7 +55,7 @@ class DetailFragment : Fragment() {
         val adapter = SneakerImagePagerAdapter(initializedList)
         binding.viewPager.adapter = adapter
         binding.cartBtn.setOnClickListener{
-            sharedViewModel.updateCartList(sneakerId)
+            sharedViewModel.updateCartItem(sneakerId)
             Toast.makeText(requireActivity(), "Item carted", Toast.LENGTH_SHORT).show()
             //TODO change the Button Text.
         }

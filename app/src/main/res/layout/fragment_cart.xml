@@ -45,27 +45,34 @@
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintBottom_toTopOf="@id/sneakerName"
+        app:layout_constraintBottom_toTopOf="@id/guidelineHorizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar"
         tools:listitem="@layout/list_item_cart_sneaker" />
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineHorizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.68" />
     <TextView
-        android:id="@+id/sneakerName"
+        android:id="@+id/tvOrderDetails"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:gravity="start"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="20dp"
         android:text="@string/order_details"
         android:textColor="@color/black"
         android:textSize="20sp"
         android:textStyle="bold"
         android:drawablePadding="5dp"
         app:drawableEndCompat="@drawable/ic_info_24"
+        app:layout_constraintVertical_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/recyclerViewCart"
+        app:layout_constraintTop_toBottomOf="@id/guidelineHorizontal"
         app:layout_constraintBottom_toBottomOf="@id/tvSubTotal" />
 
     <TextView
@@ -77,35 +84,49 @@
         android:textSize="20sp"
         android:gravity="center_vertical"
         android:text="@string/subtotal"
-        app:layout_constraintStart_toStartOf="@id/sneakerName"
-        app:layout_constraintTop_toBottomOf="@id/sneakerName"
-        tools:text="Price :" />
+        app:layout_constraintVertical_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="@id/tvOrderDetails"
+        app:layout_constraintBottom_toTopOf="@id/tvTax"
+        app:layout_constraintTop_toBottomOf="@id/tvOrderDetails" />
 
+    <TextView
+        android:id="@+id/tvSubTotalValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#B1B1B1"
+        android:textSize="20sp"
+        android:layout_marginStart="10dp"
+        android:gravity="center_vertical"
+        app:layout_constraintStart_toEndOf="@id/tvSubTotal"
+        app:layout_constraintTop_toTopOf="@+id/tvSubTotal"
+        tools:text="$398" />
 
     <TextView
         android:id="@+id/tvTax"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
+        android:layout_marginTop="15dp"
         android:textColor="#B1B1B1"
-        android:textStyle="bold"
+        android:textSize="20sp"
+        android:gravity="center_vertical"
+        android:text="@string/taxes_and_charges"
+        app:layout_constraintVertical_chainStyle="packed"
         app:layout_constraintStart_toStartOf="@id/tvSubTotal"
-        app:layout_constraintBottom_toTopOf="@id/tvTaxPrice"
-        app:layout_constraintTop_toTopOf="@+id/tvSubTotal" />
+        app:layout_constraintBottom_toTopOf="@id/tvTotal"
+        app:layout_constraintTop_toBottomOf="@+id/tvSubTotal" />
 
     <TextView
         android:id="@+id/tvTaxPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="#B1B1B1"
         android:textSize="20sp"
-        android:textColor="@color/colorPrimary"
-        android:textStyle="bold"
         android:layout_marginStart="10dp"
-        app:layout_constraintHorizontal_chainStyle="packed"
+        android:gravity="center_vertical"
         app:layout_constraintStart_toEndOf="@id/tvTax"
-        app:layout_constraintBottom_toBottomOf="@id/tvTotal"
-        app:layout_constraintTop_toTopOf="@+id/tvTax" />
-
+        app:layout_constraintBottom_toBottomOf="@id/tvTax"
+        app:layout_constraintTop_toTopOf="@+id/tvTax"
+        tools:text="$40" />
 
 
     <TextView
@@ -116,11 +137,12 @@
         android:textColor="#B1B1B1"
         android:textSize="20sp"
         android:gravity="center_vertical"
-        android:text="@string/price"
-        app:layout_constraintStart_toStartOf="@id/sneakerName"
+        android:text="@string/total"
+        android:layout_marginBottom="15dp"
+        app:layout_constraintVertical_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="@id/tvTax"
         app:layout_constraintTop_toBottomOf="@id/tvTax"
-        app:layout_constraintBottom_toBottomOf="parent"
-        tools:text="Price :" />
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 
     <TextView
@@ -133,16 +155,19 @@
         android:layout_marginStart="10dp"
         app:layout_constraintStart_toEndOf="@id/tvTotal"
         app:layout_constraintBottom_toBottomOf="@id/tvTotal"
-        app:layout_constraintTop_toTopOf="@+id/tvTotal" />
+        app:layout_constraintTop_toTopOf="@+id/tvTotal"
+        tools:text="$438" />
+
 
     <Button
         android:id="@+id/checkOutBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/add_to_cart"
+        android:textAllCaps="false"
+        android:text="@string/check_out"
         android:layout_marginStart="25dp"
-        app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toEndOf="@id/tvTotalPrice"
+        app:layout_constraintBottom_toBottomOf="@id/tvTotal"
         app:layout_constraintTop_toTopOf="@id/tvTotal" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
