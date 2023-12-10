@@ -47,9 +47,17 @@ class SneakerAdapter :
             binding.sneakerPrice.setOnClickListener {
                 sneaker.id?.let { it1 -> itemClickListener?.itemClick(it1) }
             }
+            sneaker.addedToCart.let {
+                if (it){//Already added to cart
+                    binding.plusIcon.setImageResource(R.drawable.baseline_cancel_24)
+                }
+                else{
+                    binding.plusIcon.setImageResource(R.drawable.round_add_circle_24)
+                }
+            }
             binding.plusIcon.setOnClickListener {
                 sneaker.addedToCart.let { addedToCart ->
-                    if (!addedToCart) {
+                    if (!addedToCart) {//If already added we have to swap
                         binding.plusIcon.setImageResource(R.drawable.baseline_cancel_24)
                     } else {
                         binding.plusIcon.setImageResource(R.drawable.round_add_circle_24)
