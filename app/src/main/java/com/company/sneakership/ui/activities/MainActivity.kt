@@ -26,18 +26,8 @@ class MainActivity : AppCompatActivity() {
 
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-
-        val navController =     navHostFragment.navController
-        val appBarConfiguration = AppBarConfiguration.Builder(
-            R.id.homeFragment,
-            R.id.cartFragment
-        ).build()
-
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration)
-        NavigationUI.setupWithNavController(binding.bottomNavView, navController)
+        val navController = navHostFragment.navController
         binding.bottomNavView.setupWithNavController(navController)
-
-        setupActionBarWithNavController(navController)
 
     }
 }
