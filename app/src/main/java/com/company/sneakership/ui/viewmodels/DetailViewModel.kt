@@ -12,7 +12,6 @@ class DetailViewModel : ViewModel() {
 //        get() = _details
 
     // Method to load details based on itemId
-    fun loadDetails(itemId: String) {
-        // TODO: Implement logic to load details from repository based on itemId
-    }
+
+
 }

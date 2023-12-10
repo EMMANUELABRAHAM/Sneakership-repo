@@ -15,10 +15,11 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.company.sneakership.R
 import com.company.sneakership.databinding.FragmentHomeBinding
 import com.company.sneakership.ui.adapter.SneakerAdapter
+import com.company.sneakership.ui.adapter.listners.HomeSneakerListListener
 import com.company.sneakership.ui.viewmodels.HomeViewModel
 import com.company.sneakership.ui.viewmodels.SharedViewModel
 
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(), HomeSneakerListListener {
 
     private lateinit var viewModel: HomeViewModel
     private lateinit var sharedViewModel: SharedViewModel
@@ -33,17 +34,15 @@ class HomeFragment : Fragment() {
         val view = binding.root
 
         sharedViewModel = ViewModelProvider(
-            this,
+            requireActivity(),
             SharedViewModel.ViewModelFactory(requireActivity().application)
         )[SharedViewModel::class.java]
 
         viewModel = ViewModelProvider(requireActivity())[HomeViewModel::class.java]
 
         binding.recyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
-        val adapter = SneakerAdapter { itemId ->
-            sharedViewModel.setSelectedItemId(itemId)
-            navigateToDetail()
-        }
+        val adapter = SneakerAdapter()
+        adapter.setOnItemClickListener(this)
         binding.recyclerView.adapter = adapter
 
         sharedViewModel.sneakersListLiveData.observe(viewLifecycleOwner) {
@@ -92,5 +91,14 @@ class HomeFragment : Fragment() {
 
     private fun navigateToDetail() {
         navController.navigate(R.id.action_homeFragment_to_detailFragment)
+    }
+
+    override fun itemClick(id: String) {
+        sharedViewModel.setSelectedItemId(id)
+        navigateToDetail()
+    }
+
+    override fun cartIconClick(id: String) {
+      sharedViewModel.updateCartList(id)
     }
 }

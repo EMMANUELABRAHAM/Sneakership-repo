@@ -2,29 +2,147 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <ImageButton
-        android:id="@+id/backButton"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/backButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:contentDescription="@string/back"
+            android:src="@drawable/ic_back"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/appNameTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="16dp"
+            android:text="@string/cart"
+            android:textColor="@color/colorPrimary"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+    </androidx.appcompat.widget.Toolbar>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewCart"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toTopOf="@id/sneakerName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        tools:listitem="@layout/list_item_cart_sneaker" />
+
+    <TextView
+        android:id="@+id/sneakerName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_back"
-        android:contentDescription="back"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="10dp"
+        android:gravity="start"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp" />
-
-    <!-- Cart content -->
-    <TextView
-        android:id="@+id/cartContent"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Cart Content"
+        android:text="@string/order_details"
+        android:textColor="@color/black"
         android:textSize="20sp"
-        app:layout_constraintStart_toEndOf="@id/backButton"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp" />
+        android:textStyle="bold"
+        android:drawablePadding="5dp"
+        app:drawableEndCompat="@drawable/ic_info_24"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/recyclerViewCart"
+        app:layout_constraintBottom_toBottomOf="@id/tvSubTotal" />
+
+    <TextView
+        android:id="@+id/tvSubTotal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:textColor="#B1B1B1"
+        android:textSize="20sp"
+        android:gravity="center_vertical"
+        android:text="@string/subtotal"
+        app:layout_constraintStart_toStartOf="@id/sneakerName"
+        app:layout_constraintTop_toBottomOf="@id/sneakerName"
+        tools:text="Price :" />
+
+
+    <TextView
+        android:id="@+id/tvTax"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:textColor="#B1B1B1"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@id/tvSubTotal"
+        app:layout_constraintBottom_toTopOf="@id/tvTaxPrice"
+        app:layout_constraintTop_toTopOf="@+id/tvSubTotal" />
+
+    <TextView
+        android:id="@+id/tvTaxPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:textColor="@color/colorPrimary"
+        android:textStyle="bold"
+        android:layout_marginStart="10dp"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toEndOf="@id/tvTax"
+        app:layout_constraintBottom_toBottomOf="@id/tvTotal"
+        app:layout_constraintTop_toTopOf="@+id/tvTax" />
+
+
+
+    <TextView
+        android:id="@+id/tvTotal"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginTop="15dp"
+        android:textColor="#B1B1B1"
+        android:textSize="20sp"
+        android:gravity="center_vertical"
+        android:text="@string/price"
+        app:layout_constraintStart_toStartOf="@id/sneakerName"
+        app:layout_constraintTop_toBottomOf="@id/tvTax"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:text="Price :" />
+
+
+    <TextView
+        android:id="@+id/tvTotalPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:textColor="@color/colorPrimary"
+        android:textStyle="bold"
+        android:layout_marginStart="10dp"
+        app:layout_constraintStart_toEndOf="@id/tvTotal"
+        app:layout_constraintBottom_toBottomOf="@id/tvTotal"
+        app:layout_constraintTop_toTopOf="@+id/tvTotal" />
+
+    <Button
+        android:id="@+id/checkOutBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/add_to_cart"
+        android:layout_marginStart="25dp"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toEndOf="@id/tvTotalPrice"
+        app:layout_constraintTop_toTopOf="@id/tvTotal" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

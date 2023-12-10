@@ -10,17 +10,18 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
+        android:padding="16dp"
         android:layout_height="wrap_content">
 
         <ImageView
-            android:id="@+id/plusIcon"
+            android:id="@+id/cancelIcon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:layout_marginTop="7dp"
             android:contentDescription="@string/plus_icon"
-            android:src="@drawable/round_add_circle_24"
-            app:layout_constraintStart_toStartOf="parent"
+            android:src="@drawable/baseline_cancel_24"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
@@ -30,40 +31,36 @@
             android:layout_marginTop="10dp"
             android:contentDescription="@string/sneaker_img"
             android:src="@drawable/sneaker"
-            app:layout_constraintBottom_toTopOf="@id/sneakerName"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/plusIcon"
-            app:layout_constraintTop_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             tools:src="@drawable/sneaker" />
 
         <TextView
             android:id="@+id/sneakerName"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="7dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="30dp"
+            android:padding="5dp"
             android:gravity="center"
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@id/sneakerPrice"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/sneakerImage"
+            app:layout_constraintStart_toEndOf="@id/sneakerImage"
+            app:layout_constraintTop_toTopOf="@id/sneakerImage"
             tools:text="Nike Air" />
 
         <TextView
             android:id="@+id/sneakerPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
-            android:gravity="center"
-            android:textColor="@color/colorPrimary"
+            android:padding="5dp"
+            android:textColor="#9C9C9C"
             android:textSize="20sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@id/sneakerName"
             app:layout_constraintTop_toBottomOf="@id/sneakerName"
             tools:text="$199" />
     </androidx.constraintlayout.widget.ConstraintLayout>

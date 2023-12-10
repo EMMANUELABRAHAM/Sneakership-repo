@@ -10,4 +10,12 @@
     <string name="popular">Popular</string>
     <string name="sort_by">Sort by</string>
     <string name="image_arrow">image arrow</string>
+    <string name="img_view">img view</string>
+    <string name="size_uk">Size (uk) :</string>
+    <string name="colour">Colour :</string>
+    <string name="price">Price :</string>
+    <string name="add_to_cart">Add to Cart</string>
+    <string name="sample_description_of_the_item">Sample description Of the Item</string>
+    <string name="order_details">Order Details</string>
+    <string name="subtotal">Subtotal</string>
 </resources>

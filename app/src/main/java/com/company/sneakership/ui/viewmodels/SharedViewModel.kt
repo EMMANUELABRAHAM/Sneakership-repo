@@ -19,10 +19,15 @@ class SharedViewModel(private val application: Application) : ViewModel() {
     private val _sneakersListLiveData = MutableLiveData<List<Sneaker>?>()
     val sneakersListLiveData: MutableLiveData<List<Sneaker>?> = _sneakersListLiveData
 
+    private val _sneakersCartListLiveData = MutableLiveData<List<Sneaker>?>()
+    val sneakersCartListLiveData: MutableLiveData<List<Sneaker>?> = _sneakersCartListLiveData
+
     private val _errorMsg: MutableLiveData<String?> = MutableLiveData<String?>()
     val errorMsg: LiveData<String?>
         get() = _errorMsg
-
+    private val _itemDetails = MutableLiveData<Sneaker?>()
+    val itemDetails: LiveData<Sneaker?>
+        get() = _itemDetails
 
     init {
         getSneakers()
@@ -49,6 +54,25 @@ class SharedViewModel(private val application: Application) : ViewModel() {
 
     fun setSelectedItemId(itemId: String) {
         _selectedItemId.value = itemId
+    }
+
+    fun getItemDetails(itemId: String) {
+        _itemDetails.value = sneakersListLiveData.value?.first { it.id == itemId }
+    }
+
+    fun updateCartList(id: String){
+       sneakersListLiveData.value?.first { it.id == id }?.let {sneaker ->
+           sneaker.addedToCart.let { addedToCart ->
+               sneaker.addedToCart = !addedToCart
+           }
+       }
+        updateCartList()
+    }
+
+    fun updateCartList(){
+        _sneakersCartListLiveData.value = sneakersListLiveData.value?.filter {
+            it.addedToCart
+        }
     }
 
 

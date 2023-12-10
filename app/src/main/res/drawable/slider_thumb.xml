@@ -1,0 +1,11 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Background of the thumb (a circle) -->
+    <item>
+        <shape android:shape="oval">
+            <solid android:color="#2196F3"/> <!-- Change color as needed -->
+            <size android:width="16dp" android:height="16dp"/>
+        </shape>
+    </item>
+    <item android:drawable="@drawable/slider_img" android:gravity="center"/>
+</layer-list>
