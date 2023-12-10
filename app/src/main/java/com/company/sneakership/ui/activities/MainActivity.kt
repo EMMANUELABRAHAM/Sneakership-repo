@@ -22,21 +22,12 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+        supportActionBar?.hide()
 
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-
-        val navController =     navHostFragment.navController
-        val appBarConfiguration = AppBarConfiguration.Builder(
-            R.id.homeFragment,
-            R.id.cartFragment
-        ).build()
-
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration)
-        NavigationUI.setupWithNavController(binding.bottomNavView, navController)
+        val navController = navHostFragment.navController
         binding.bottomNavView.setupWithNavController(navController)
-
-        setupActionBarWithNavController(navController)
 
     }
 }

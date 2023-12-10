@@ -3,4 +3,11 @@
     <string name="back">back</string>
     <string name="home">Home</string>
     <string name="cart">Cart</string>
+    <string name="sneaker_img">sneakerImg</string>
+    <string name="plus_icon">plus icon</string>
+    <string name="search_icon">search icon</string>
+    <string name="sneaker_price_format">$%.3f</string>
+    <string name="popular">Popular</string>
+    <string name="sort_by">Sort by</string>
+    <string name="image_arrow">image arrow</string>
 </resources>

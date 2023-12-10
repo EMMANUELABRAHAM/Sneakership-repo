@@ -28,7 +28,10 @@ class DetailFragment : Fragment() {
         val view = binding.root
 
         viewModel = ViewModelProvider(this)[DetailViewModel::class.java]
-        sharedViewModel = ViewModelProvider(requireActivity())[SharedViewModel::class.java]
+        sharedViewModel = ViewModelProvider(
+            this,
+            SharedViewModel.ViewModelFactory(requireActivity().application)
+        )[SharedViewModel::class.java]
 
         // Retrieve itemId from SharedViewModel
         val itemId = sharedViewModel.selectedItemId.value ?: 0
