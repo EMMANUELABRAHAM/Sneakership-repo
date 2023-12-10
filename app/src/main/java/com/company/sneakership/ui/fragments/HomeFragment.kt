@@ -5,18 +5,20 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.bumptech.glide.Glide
+import androidx.recyclerview.widget.GridLayoutManager
 import com.company.sneakership.R
 import com.company.sneakership.databinding.FragmentHomeBinding
 import com.company.sneakership.ui.adapter.SneakerAdapter
 import com.company.sneakership.ui.viewmodels.HomeViewModel
 import com.company.sneakership.ui.viewmodels.SharedViewModel
+
 
 class HomeFragment : Fragment() {
 
@@ -32,29 +34,28 @@ class HomeFragment : Fragment() {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
         val view = binding.root
 
-        Glide
-            .with(this)
-            .load("file:///android_asset/images/sneaker.png")
-            .centerCrop()
-            .placeholder(R.drawable.ic_home)
-            .into(binding.imageView);
+//        Glide
+//            .with(this)
+//            .load("file:///android_asset/images/sneaker.png")
+//            .centerCrop()
+//            .placeholder(R.drawable.ic_home)
+//            .into(binding.imageView);
 
 //        viewModel = ViewModelProvider(this)[HomeViewModel::class.java]
         sharedViewModel = ViewModelProvider(requireActivity())[SharedViewModel::class.java]
 
-        viewModel = ViewModelProvider(this,
+        viewModel = ViewModelProvider(
+            this,
             HomeViewModel.ViewModelFactory(requireActivity().application)
         )[HomeViewModel::class.java]
 
-        // Setup RecyclerView and adapter for listing T-shirts
-        binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        binding.recyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
         val adapter = SneakerAdapter { itemId ->
             sharedViewModel.setSelectedItemId(itemId)
             navigateToDetail()
         }
         binding.recyclerView.adapter = adapter
 
-        // Observe the list of T-shirts from the ViewModel
         viewModel.sneakersLiveData.observe(viewLifecycleOwner, Observer {
             Log.d("Response", it.toString())
         })
@@ -62,7 +63,38 @@ class HomeFragment : Fragment() {
         // Set up navigation controller
         navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
 
+
+//        (requireActivity() as AppCompatActivity).setSupportActionBar(binding.toolbar)
+//        (requireActivity() as AppCompatActivity).supportActionBar!!.setDisplayShowTitleEnabled(false)
+
+        binding.searchView.setOnClickListener {
+            Toast.makeText(requireActivity(), "Search", Toast.LENGTH_SHORT).show()
+        }
+        configureSearchView()
         return view
+    }
+
+    private fun configureSearchView() {
+        // Set listeners for SearchView
+        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                // Handle the query when the user submits
+                binding.searchView.clearFocus()
+//                binding.searchView.isIconified = true
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                // Handle the query text as it changes
+                return false
+            }
+        })
+
+//        // Set the close listener for SearchView
+//        binding.searchView.setOnCloseListener {
+//            // Handle the search view being closed
+//            false
+//        }
     }
 
     private fun navigateToDetail() {

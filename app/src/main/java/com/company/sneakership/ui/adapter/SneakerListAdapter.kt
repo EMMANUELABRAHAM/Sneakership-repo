@@ -16,7 +16,7 @@ class SneakerAdapter(private val onItemClick: (String) -> Unit) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(sneaker: Sneaker) {
-            binding.SneakerName.text = sneaker.name
+            binding.sneakerName.text = sneaker.name
         }
     }
 
