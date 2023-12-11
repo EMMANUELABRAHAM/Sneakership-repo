@@ -1,7 +1,6 @@
 package com.company.sneakership.ui.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,11 +13,13 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
 import com.company.sneakership.R
 import com.company.sneakership.databinding.FragmentHomeBinding
+import com.company.sneakership.model.SortCriteria
 import com.company.sneakership.ui.adapter.SneakerAdapter
+import com.company.sneakership.ui.adapter.listners.HomeSneakerListListener
 import com.company.sneakership.ui.viewmodels.HomeViewModel
 import com.company.sneakership.ui.viewmodels.SharedViewModel
 
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(), HomeSneakerListListener, SortBottomSheetFragment.SortListener {
 
     private lateinit var viewModel: HomeViewModel
     private lateinit var sharedViewModel: SharedViewModel
@@ -33,17 +34,15 @@ class HomeFragment : Fragment() {
         val view = binding.root
 
         sharedViewModel = ViewModelProvider(
-            this,
+            requireActivity(),
             SharedViewModel.ViewModelFactory(requireActivity().application)
         )[SharedViewModel::class.java]
 
         viewModel = ViewModelProvider(requireActivity())[HomeViewModel::class.java]
 
         binding.recyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
-        val adapter = SneakerAdapter { itemId ->
-            sharedViewModel.setSelectedItemId(itemId)
-            navigateToDetail()
-        }
+        val adapter = SneakerAdapter()
+        adapter.setOnItemClickListener(this)
         binding.recyclerView.adapter = adapter
 
         sharedViewModel.sneakersListLiveData.observe(viewLifecycleOwner) {
@@ -59,11 +58,14 @@ class HomeFragment : Fragment() {
         }
 
         navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
-
-        binding.searchView.setOnClickListener {
-            Toast.makeText(requireActivity(), "Search", Toast.LENGTH_SHORT).show()
-        }
         configureSearchView()
+
+        val sortBottomSheetFragment = SortBottomSheetFragment()
+        sortBottomSheetFragment.setSortListener(this)
+        binding.textSortBy.setOnClickListener {
+            sortBottomSheetFragment.show(childFragmentManager, sortBottomSheetFragment.tag)
+
+        }
         return view
     }
 
@@ -71,26 +73,35 @@ class HomeFragment : Fragment() {
         // Set listeners for SearchView
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                // Handle the query when the user submits
-                binding.searchView.clearFocus()
-//                binding.searchView.isIconified = true
                 return false
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                // Handle the query text as it changes
+                sharedViewModel.searchSneakers(newText.orEmpty())
                 return false
             }
         })
-
-//        // Set the close listener for SearchView
-//        binding.searchView.setOnCloseListener {
-//            // Handle the search view being closed
-//            false
-//        }
     }
 
     private fun navigateToDetail() {
         navController.navigate(R.id.action_homeFragment_to_detailFragment)
+    }
+
+    override fun itemClick(id: String) {
+        sharedViewModel.setSelectedItemId(id)
+        navigateToDetail()
+    }
+
+    override fun cartIconClick(id: String) {
+      sharedViewModel.updateCartItem(id)
+    }
+
+    override fun onSortSelected(sortCriteria: SortCriteria) {
+        sharedViewModel.sortSneakersBy(sortCriteria)
+        val text = when(sortCriteria){
+            SortCriteria.RETAIL_PRICE_HIGH_TO_LOW -> "HighToLow"
+            SortCriteria.RETAIL_PRICE_LOW_TO_HIGH -> "LowToHigh"
+        }
+        binding.textSortBy.text =text
     }
 }
