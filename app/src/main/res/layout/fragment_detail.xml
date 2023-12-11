@@ -76,7 +76,7 @@
         app:cardElevation="50dp"
         android:padding="10dp"
         app:cardCornerRadius="10dp"
-        android:backgroundTint="#F1EDED"
+        android:background="@drawable/bottom_nav_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tab_layout">
 

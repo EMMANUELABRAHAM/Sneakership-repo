@@ -15,8 +15,8 @@
 
         <ImageView
             android:id="@+id/backButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:contentDescription="@string/back"
@@ -26,10 +26,10 @@
 
         <TextView
             android:id="@+id/appNameTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
             android:layout_gravity="center"
-            android:layout_marginStart="16dp"
+            android:layout_marginTop="20dp"
             android:text="@string/cart"
             android:textColor="@color/colorPrimary"
             android:textSize="18sp"
@@ -56,7 +56,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.68" />
+        app:layout_constraintGuide_percent="0.6" />
     <TextView
         android:id="@+id/tvOrderDetails"
         android:layout_width="wrap_content"
@@ -138,7 +138,7 @@
         android:textSize="20sp"
         android:gravity="center_vertical"
         android:text="@string/total"
-        android:layout_marginBottom="15dp"
+        android:layout_marginBottom="50dp"
         app:layout_constraintVertical_chainStyle="packed"
         app:layout_constraintStart_toStartOf="@id/tvTax"
         app:layout_constraintTop_toBottomOf="@id/tvTax"
