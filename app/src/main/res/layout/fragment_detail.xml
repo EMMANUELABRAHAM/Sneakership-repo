@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/backButton"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:contentDescription="@string/back"
+        android:src="@drawable/ic_back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/leftIcon"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:elevation="5dp"
+        android:contentDescription="@string/back"
+        android:src="@drawable/ic_left_inactive"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/viewPager" />
+
+    <ImageView
+        android:id="@+id/rightIcon"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="16dp"
+        android:elevation="5dp"
+        android:contentDescription="@string/back"
+        android:src="@drawable/right_active"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/viewPager" />
+
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginTop="5dp"
+        app:layout_constraintStart_toEndOf="@id/leftIcon"
+        app:layout_constraintEnd_toStartOf="@id/rightIcon"
+        app:layout_constraintTop_toBottomOf="@id/backButton"
+        app:layout_constraintWidth_default="wrap"
+        app:layout_constraintWidth_max="wrap" />
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tab_layout"
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        app:tabBackground="@drawable/tab_selector"
+        app:tabGravity="center"
+        app:tabIndicatorHeight="0dp"
+        app:layout_constraintStart_toStartOf="@id/viewPager"
+        app:layout_constraintEnd_toEndOf="@id/viewPager"
+        app:layout_constraintTop_toBottomOf="@id/viewPager"/>
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardSneakerDetails"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        app:cardElevation="50dp"
+        android:padding="10dp"
+        app:cardCornerRadius="10dp"
+        android:background="@drawable/bottom_nav_background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tab_layout">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp">
+
+            <TextView
+                android:id="@+id/sneakerName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:drawablePadding="5dp"
+                android:gravity="start"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:drawableEndCompat="@drawable/ic_info_24"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Nike Air" />
+
+            <TextView
+                android:id="@+id/sneakerDesc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="start"
+                android:textColor="#B1B1B1"
+                android:textSize="15sp"
+                app:layout_constraintStart_toStartOf="@id/sneakerName"
+                app:layout_constraintTop_toBottomOf="@id/sneakerName"
+                tools:text="Sample description of the sneaker" />
+
+            <TextView
+                android:id="@+id/tvSize"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginTop="15dp"
+                android:gravity="center_vertical"
+                android:text="@string/size_uk"
+                android:textColor="#B1B1B1"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="@id/sizeButton6"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="@id/sneakerName"
+                app:layout_constraintTop_toBottomOf="@id/sneakerDesc"
+                tools:text="Size(uk) :" />
+
+
+            <Button
+                android:id="@+id/sizeButton6"
+                style="@style/SneakerSizeButton"
+                android:background="@drawable/custom_button_background"
+                android:text="6"
+                android:textColor="@color/button_text_color_selector"
+                app:layout_constraintEnd_toStartOf="@+id/sizeButton7"
+                app:layout_constraintStart_toEndOf="@id/tvSize"
+                app:layout_constraintTop_toTopOf="@+id/tvSize" />
+
+            <Button
+                android:id="@+id/sizeButton7"
+                style="@style/SneakerSizeButton"
+                android:background="@drawable/custom_button_background"
+                android:text="7"
+                android:textColor="@color/button_text_color_selector"
+                app:layout_constraintBottom_toBottomOf="@id/sizeButton6"
+                app:layout_constraintEnd_toStartOf="@+id/sizeButton8"
+                app:layout_constraintStart_toEndOf="@id/sizeButton6"
+                app:layout_constraintTop_toTopOf="@id/sizeButton6" />
+
+            <Button
+                android:id="@+id/sizeButton8"
+                style="@style/SneakerSizeButton"
+                android:background="@drawable/custom_button_background"
+                android:text="8"
+                android:textColor="@color/button_text_color_selector"
+                app:layout_constraintBottom_toBottomOf="@id/sizeButton7"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/sizeButton7"
+                app:layout_constraintTop_toTopOf="@+id/sizeButton6" />
+
+            <TextView
+                android:id="@+id/tvColour"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginTop="15dp"
+                android:gravity="center_vertical"
+                android:text="@string/colour"
+                android:textColor="#B1B1B1"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="@id/clrBtn1"
+                app:layout_constraintStart_toStartOf="@id/sneakerName"
+                app:layout_constraintTop_toBottomOf="@id/tvSize"
+                tools:text="Colour :" />
+
+
+            <ImageButton
+                android:id="@+id/clrBtn1"
+                style="@style/SneakerColour"
+                android:backgroundTint="#E39696"
+                app:layout_constraintEnd_toStartOf="@+id/sizeButton7"
+                app:layout_constraintStart_toEndOf="@id/tvSize"
+                app:layout_constraintTop_toTopOf="@+id/tvColour"
+                android:contentDescription="@string/img_view" />
+
+            <ImageButton
+                android:id="@+id/clrBtn2"
+                style="@style/SneakerColour"
+                android:text="6"
+                android:backgroundTint="#8CDBF3"
+                app:layout_constraintEnd_toStartOf="@+id/sizeButton8"
+                app:layout_constraintStart_toEndOf="@id/clrBtn1"
+                app:layout_constraintTop_toTopOf="@id/tvColour"
+                android:contentDescription="@string/img_view" />
+
+
+            <ImageButton
+                android:id="@+id/clrBtn3"
+                style="@style/SneakerColour"
+                android:text="6"
+                android:backgroundTint="#A09DE6"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/clrBtn2"
+                app:layout_constraintTop_toTopOf="@+id/tvColour"
+                android:contentDescription="@string/img_view" />
+
+
+
+            <TextView
+                android:id="@+id/tvPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginTop="15dp"
+                android:gravity="center_vertical"
+                android:text="@string/price"
+                android:textColor="#B1B1B1"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="@id/cartBtn"
+                app:layout_constraintStart_toStartOf="@id/sneakerName"
+                app:layout_constraintTop_toBottomOf="@id/tvColour"
+                tools:text="Price :" />
+
+
+            <TextView
+                android:id="@+id/tvRetailPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:textColor="@color/colorPrimary"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@id/cartBtn"
+                app:layout_constraintStart_toEndOf="@id/tvPrice"
+                app:layout_constraintTop_toTopOf="@+id/tvPrice" />
+
+            <Button
+                android:id="@+id/cartBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="25dp"
+                android:text="@string/add_to_cart"
+                app:layout_constraintStart_toEndOf="@id/tvRetailPrice"
+                app:layout_constraintTop_toTopOf="@id/tvPrice" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

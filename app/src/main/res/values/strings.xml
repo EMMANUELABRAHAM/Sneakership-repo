@@ -1,3 +1,29 @@
 <resources>
     <string name="app_name">Sneakership</string>
+    <string name="back">back</string>
+    <string name="home">Home</string>
+    <string name="cart">Cart</string>
+    <string name="sneaker_img">sneakerImg</string>
+    <string name="plus_icon">plus icon</string>
+    <string name="search_icon">search icon</string>
+    <string name="sneaker_price_format">$%.3f</string>
+    <string name="popular">Popular</string>
+    <string name="sort_by">Sort by</string>
+    <string name="image_arrow">image arrow</string>
+    <string name="img_view">img view</string>
+    <string name="size_uk">Size (uk) :</string>
+    <string name="colour">Colour :</string>
+    <string name="price">Price :</string>
+    <string name="add_to_cart">Add to Cart</string>
+    <string name="sample_description_of_the_item">Sample description Of the Item</string>
+    <string name="order_details">Order Details</string>
+    <string name="subtotal">Subtotal</string>
+    <string name="taxes_and_charges">Taxes and Charges :</string>
+    <string name="total">Total :</string>
+    <string name="check_out">$ Check Out</string>
+    <string name="high_to_low">High to Low</string>
+    <string name="low_to_high">Low to High</string>
+    <string name="apply">Apply</string>
+    <string name="add_to_cart_text">Add to Cart</string>
+    <string name="remove_from_cart">Remove from Cart</string>
 </resources>
