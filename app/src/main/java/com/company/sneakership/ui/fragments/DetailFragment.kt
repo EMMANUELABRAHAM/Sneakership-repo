@@ -15,6 +15,7 @@ import com.company.sneakership.model.Sneaker
 import com.company.sneakership.ui.adapter.SneakerImagePagerAdapter
 import com.company.sneakership.ui.viewmodels.DetailViewModel
 import com.company.sneakership.ui.viewmodels.SharedViewModel
+import com.google.android.material.tabs.TabLayoutMediator
 
 class DetailFragment : Fragment() {
 
@@ -62,6 +63,9 @@ class DetailFragment : Fragment() {
             navController.popBackStack()
         }
 
+        TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
+            // Customize tab titles or other properties if needed
+        }.attach()
         return view
     }
 

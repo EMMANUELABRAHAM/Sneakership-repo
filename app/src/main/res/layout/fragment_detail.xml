@@ -41,6 +41,18 @@
         app:layout_constraintWidth_default="wrap"
         app:layout_constraintWidth_max="wrap" />
 
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tab_layout"
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        app:tabBackground="@drawable/tab_selector"
+        app:tabGravity="center"
+        app:tabIndicatorHeight="0dp"
+        app:layout_constraintStart_toStartOf="@id/viewPager"
+        app:layout_constraintEnd_toEndOf="@id/viewPager"
+        app:layout_constraintTop_toBottomOf="@id/viewPager"/>
+
+
     <ImageView
         android:id="@+id/rightIcon"
         android:layout_width="50dp"
@@ -66,7 +78,7 @@
         app:cardCornerRadius="10dp"
         android:backgroundTint="#F1EDED"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/viewPager">
+        app:layout_constraintTop_toBottomOf="@id/tab_layout">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
