@@ -25,17 +25,14 @@ Welcome to the Sneaker Ship App, a mobile application designed to showcase and m
 - ViewPager for smooth navigation
 - Bottom Navigation for easy access
 - SearchView for quick searching
-
 ## Screenshots
 
-![Display Page](/screenshots/display_page.png)
-*Caption: Sneaker grid with search feature.*
-
-![Sneaker Details](/screenshots/sneaker_details.png)
-*Caption: Detailed information about a selected sneaker with an "Add to Cart" button.*
-
-![Checkout Page](/screenshots/checkout_page.png)
-*Caption: Cart page displaying added sneakers with a total price.*
+<p float="left">
+  <img src="screenshots/home-screen.jpg" width="200" />
+  <img src="screenshots/detail-screen.jpg" width="200" />
+  <img src="screenshots/cart-screen.jpg" width="200" />
+</p>
+*Captions: (Left) Sneaker grid with search feature, (Center) Detailed information about a selected sneaker with an "Add to Cart" button, (Right) Cart page displaying added sneakers with a total price.*
 
 ## Getting Started
 
