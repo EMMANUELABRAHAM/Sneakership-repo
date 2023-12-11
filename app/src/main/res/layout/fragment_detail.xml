@@ -26,9 +26,22 @@
         android:contentDescription="@string/back"
         android:src="@drawable/ic_left_inactive"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/viewPager"
-        app:layout_constraintBottom_toBottomOf="@id/viewPager"
-        app:layout_constraintTop_toTopOf="@id/viewPager" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/viewPager" />
+
+    <ImageView
+        android:id="@+id/rightIcon"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="16dp"
+        android:elevation="5dp"
+        android:contentDescription="@string/back"
+        android:src="@drawable/right_active"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/viewPager" />
+
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewPager"
@@ -52,19 +65,6 @@
         app:layout_constraintEnd_toEndOf="@id/viewPager"
         app:layout_constraintTop_toBottomOf="@id/viewPager"/>
 
-
-    <ImageView
-        android:id="@+id/rightIcon"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:contentDescription="@string/back"
-        android:src="@drawable/right_inactive"
-        app:layout_constraintStart_toEndOf="@id/viewPager"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="@id/viewPager"
-        app:layout_constraintTop_toTopOf="@id/viewPager" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardSneakerDetails"

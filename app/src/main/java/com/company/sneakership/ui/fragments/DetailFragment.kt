@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import androidx.viewpager2.widget.ViewPager2
 import com.company.sneakership.R
 import com.company.sneakership.databinding.FragmentDetailBinding
 import com.company.sneakership.model.Sneaker
@@ -46,11 +47,15 @@ class DetailFragment : Fragment() {
                 updateViews(it)
             }
         }
-        val initializedList: MutableList<String> = mutableListOf("file:///android_asset/images/sneaker-img.png", "file:///android_asset/images/sneaker-img.png", "file:///android_asset/images/sneaker-img.png")
+        val initializedList: MutableList<String> = mutableListOf(
+            "file:///android_asset/images/sneaker-img.png",
+            "file:///android_asset/images/sneaker-img.png",
+            "file:///android_asset/images/sneaker-img.png"
+        )
 
         val adapter = SneakerImagePagerAdapter(initializedList)
         binding.viewPager.adapter = adapter
-        binding.cartBtn.setOnClickListener{
+        binding.cartBtn.setOnClickListener {
             showToastForTheCartOperation()
             sharedViewModel.updateCartItem(sneakerId)
             sharedViewModel.getItemDetails(sneakerId)
@@ -64,16 +69,51 @@ class DetailFragment : Fragment() {
         }
 
         TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
-            // Customize tab titles or other properties if needed
         }.attach()
+
+        binding.viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                updateIconStates()
+            }
+        })
+        binding.leftIcon.setOnClickListener {
+            updateViewPagerPosition(isLeft= true)
+        }
+
+        binding.rightIcon.setOnClickListener {
+            updateViewPagerPosition(false)
+        }
         return view
+    }
+
+    private fun updateViewPagerPosition(isLeft: Boolean) {
+        val currentPosition = binding.viewPager.currentItem
+        if (currentPosition > 0 && isLeft) {
+            binding.viewPager.currentItem = currentPosition - 1
+        }else if (currentPosition < 2 && !isLeft){
+            binding.viewPager.currentItem = currentPosition + 1
+        }
+        updateIconStates()
+    }
+
+    private fun updateIconStates() {
+        val currentPosition = binding.viewPager.currentItem
+
+        val leftIconResId =
+            if (currentPosition == 0) R.drawable.ic_left_inactive else R.drawable.ic_left_active
+        binding.leftIcon.setImageResource(leftIconResId)
+
+        val rightIconResId =
+            if (currentPosition == 2) R.drawable.right_inactive else R.drawable.right_active
+        binding.rightIcon.setImageResource(rightIconResId)
     }
 
     private fun showToastForTheCartOperation() {
         sharedViewModel.itemDetails.value?.let {
-            if (it.addedToCart){
+            if (it.addedToCart) {
                 Toast.makeText(requireActivity(), "Item Removed", Toast.LENGTH_SHORT).show()
-            }else{
+            } else {
                 Toast.makeText(requireActivity(), "Item Added", Toast.LENGTH_SHORT).show()
             }
         }
@@ -83,9 +123,9 @@ class DetailFragment : Fragment() {
         binding.tvRetailPrice.text = "$${it.retailPrice.toString()}"
         binding.sneakerName.text = it.name
         binding.sneakerDesc.text = getString(R.string.sample_description_of_the_item)
-        if (it.addedToCart){
+        if (it.addedToCart) {
             binding.cartBtn.text = getString(R.string.remove_from_cart)
-        }else{
+        } else {
             binding.cartBtn.text = getString(R.string.add_to_cart_text)
         }
     }
