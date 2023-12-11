@@ -22,7 +22,7 @@ class SortBottomSheetFragment : BottomSheetDialogFragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentSortBottomSheetBinding.inflate(inflater, container, false)
         return binding.root
     }

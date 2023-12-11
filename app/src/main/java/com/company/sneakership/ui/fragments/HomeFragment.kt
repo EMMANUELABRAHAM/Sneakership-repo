@@ -73,9 +73,6 @@ class HomeFragment : Fragment(), HomeSneakerListListener, SortBottomSheetFragmen
         // Set listeners for SearchView
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                // Handle the query when the user submits
-//                binding.searchView.clearFocus()
-//                sharedViewModel.searchSneakers(query.orEmpty())
                 return false
             }
 
@@ -84,12 +81,6 @@ class HomeFragment : Fragment(), HomeSneakerListListener, SortBottomSheetFragmen
                 return false
             }
         })
-
-//        // Set the close listener for SearchView
-//        binding.searchView.setOnCloseListener {
-//            // Handle the search view being closed
-//            false
-//        }
     }
 
     private fun navigateToDetail() {
