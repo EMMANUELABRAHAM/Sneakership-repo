@@ -121,7 +121,7 @@ class DetailFragment : Fragment() {
 
     private fun updateViews(it: Sneaker) {
         binding.tvRetailPrice.text = "$${it.retailPrice.toString()}"
-        binding.sneakerName.text = it.name
+        binding.sneakerName.text = "${it.name} ${it.year}"
         binding.sneakerDesc.text = getString(R.string.sample_description_of_the_item)
         if (it.addedToCart) {
             binding.cartBtn.text = getString(R.string.remove_from_cart)
